@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Negozio | Album Supereroi</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="js/shop.js" type="text/javascript"></script>
+    <script src="js/marvel.js" type="text/javascript"></script>
+
+    <script>
+        username = sessionStorage.getItem("username")
+        password = sessionStorage.getItem("password") 
+        existAlbum = sessionStorage.getItem("album"+username)
+        if (username == null || password == null){
+            window.alert("Registrati prima di tornare in questa pagina!")
+            location.href="index.html"
+        } else {
+            start()
+        }
+        if(existAlbum == 1){
+            alert("Prima di tornare in questa sezione crea un album!")
+            window.location.href="album.html"
+        }
+    </script>
+
+
+</head>
+
+<body>
+    <div class="cover" id="cover"></div>
+
+    <header>
+        <center><h1 id="mainTitle">Negozio</h1></center>
+
+        <nav> 
+            <a href="profilo.html">PROFILO</a>
+            <a href="#" id="shopPage">NEGOZIO</a>
+            <a href="scambi.html">SCAMBI</a>
+            <a href="index.html" onclick="exit()">ESCI</a>
+        </nav>
+    </header>
+
+
+    
+
+
+
+
+    <div class="container">
+    <div id="acquisto1" class="buy">
+        <button class="close" onclick="closebuy1();">X</button>
+        <center><img src="img/logo.jpeg" width="30%"></center><br><br>
+        <center><label>ACQUISTA 1 CREDITO</label></center>
+
+        <form>
+            <label>Intestatario</label><br>
+            <input type="text" class="input-buy" onkeyup="ckIntestatario1();activeBuy1()" id="Intestatario1" placeholder="Mario Rossi"><br>
+            <label class="errors" id="Intestatario-errors1"></label><br><br>
+            <label>Numero di carta</label><br>
+            <input type="text" class="input-buy" onkeyup="ckCard1();activeBuy1()" id="numeroCarta1" placeholder="1234-5678-9101-1121"><br>
+            <label class="errors" id="cardNum-errors1"></label><br><br>
+            <label>Scadenza</label><br>
+            <input type="month" class="input-buy" min="10-2023" onchange="ckDate1();activeBuy1()" id="scad1"><br>
+            <label class="errors" id="scad-errors1"></label><br><br>
+            <label>CVV</label><br>
+            <input type="number" class="input-buy" min="100" max="999" onkeyup="ckCVV1();activeBuy1()" id="cvv1" placeholder="123"><br>
+            <label class="errors" id="cvv-errors1"></label><br>
+        </form>
+        <center><input type="submit" id="toBuy1" value="ACQUISTA" onclick="toBuy1()" class="submit" disabled></center>
+        
+    </div>
+    </div>
+
+
+    <div class="container">
+        <div id="acquisto10" class="buy">
+            <button class="close" onclick="closebuy10();">X</button><center>
+            <img src="img/logo.jpeg" width="30%"></center><br><br>
+            <center><label>ACQUISTA 10 CREDITI</label></center>
+
+            <form>    
+                <label>Intestatario</label><br>
+                <input type="text" class="input-buy" onkeyup="ckIntestatario10();activeBuy10()" id="Intestatario10" placeholder="Mario Rossi">
+                <br>
+                <label class="errors" id="Intestatario-errors10"></label><br><br>
+                <label>Numero di carta</label><br>
+                <input type="text" class="input-buy" onkeyup="ckCard10();activeBuy10()" id="numeroCarta10" placeholder="1234-5678-9101-1121">
+                <br>
+                <label class="errors" id="cardNum-errors10"></label><br><br>
+                <label>Scadenza</label><br>
+                <input type="month" class="input-buy" min="10-2023" onchange="ckDate10();activeBuy10()" id="scad10"><br>
+                <label class="errors" id="scad-errors10"></label><br><br>
+                <label>CVV</label><br>
+                <input type="number" class="input-buy" min="100" max="999" onkeyup="ckCVV10();activeBuy10()" id="cvv10" placeholder="123"><br>
+                <label class="errors" id="cvv-errors10"></label><br>
+            </form>
+            <center><input type="submit" id="toBuy10" value="ACQUISTA" onclick="toBuy10()" class="submit" disabled></center>
+            
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <div id="acquisto100" class="buy">
+            <button class="close" onclick="closebuy100();">X</button><center>
+            <img src="img/logo.jpeg" width="30%"></center><br><br>
+            <center><label>ACQUISTA 100 CREDITI</label></center>
+            <form>    
+                <label>Intestatario</label><br>
+                <input type="text" class="input-buy" onkeyup="ckIntestatario100();activeBuy100()" id="Intestatario100" placeholder="Mario Rossi"><br>
+                <label class="errors" id="Intestatario-errors100"></label><br><br>
+                <label>Numero di carta</label><br>
+                <input type="text" class="input-buy" onkeyup="ckCard100();activeBuy100()" id="numeroCarta100" placeholder="1234-5678-9101-1121"><br>
+                <label class="errors" id="cardNum-errors100"></label><br><br>
+                <label>Scadenza</label><br>
+                <input type="month" class="input-buy" min="10-2023" onchange="ckDate100();activeBuy100()" id="scad100"><br>
+                <label class="errors" id="scad-errors100"></label><br><br>
+                <label>CVV</label><br>
+                <input type="number" class="input-buy" min="100" max="999" onkeyup="ckCVV100();activeBuy100()" id="cvv100" placeholder="123"><br>
+                <label class="errors" id="cvv-errors100"></label><br>
+            </form>
+            <center><input type="submit" id="toBuy100" value="ACQUISTA" onclick="toBuy100()" class="submit" disabled></center>
+            
+        </div>
+    </div>
+
+
+    
+    <div id="crediti" class="profile ">
+        <img src="img/cash.png" alt="$$" width="60em" style="margin: 1em 0"> <script>numeroCrediti()</script>
+    </div>
+
+
+    <center>
+        <div id="img">
+        <img  src="img/1dollar.png" width="128px" style="margin:2%">
+        <img  src="img/stack.png" width="128px" style="margin:2%">
+        <img  src="img/bands.png" width="128px" style="margin:2%">
+        </div>
+    </center>
+
+    <center>
+        <div id="btn_acquista">
+        <button onclick="acquista1()" class="acquista">Acquista 1$</button>
+        <button onclick="acquista10()" class="acquista">Acquista 10$</button>
+        <button onclick="acquista100()" class="acquista">Acquista 100$</button>
+    </div>
+    </center>
+
+<br><hr><br>
+
+    <center>
+    <div id="img_hero">
+        <img src="img/pack.png" width="128px" style="margin:2%">
+        <img src="img/box.png" width="128px" style="margin:2%">
+    </div>
+    </center>
+
+    <center>
+        <div id="btn_hero">
+        <button onclick="pacchetto1()" class="acquista_pacchetti">Acquista 1 (1$)</button>
+        <button onclick="pacchetto10()" class="acquista_pacchetti">Acquista 10 (10$)</button>
+        </div>
+    </center>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,433 @@
+/* general */
+*{
+	box-sizing: border-box;
+}
+
+body{
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #10102b;
+	margin: 0;
+}
+
+p {
+	font-size: 80%;
+	color: lightblue;
+}
+
+
+/* top nav */
+
+#mainTitle{
+	color: lightgoldenrodyellow;
+	text-align: center;
+
+	width: 50%;
+/* 	margin: auto; */
+
+	padding: 20px 0;
+
+
+	display: inline-block;
+}
+
+
+header{
+	width: 100%;
+	display: block;
+
+	position: sticky;
+	position: -webkit-sticky; /*safari*/
+}
+
+
+
+/* menu */
+nav{
+	width: 100%;
+	background-color: midnightblue;
+	overflow: auto;
+	display: block;
+}
+
+nav a:link, nav a:visited{
+	background-color: midnightblue;
+	color: white;
+	text-decoration: none;
+
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+
+	padding: 12px;
+	border: 2px solid lightblue;
+
+	float: left;
+	width: 20%;
+}
+
+nav a:hover, nav a:active{
+	color: gold;
+	border: 2px solid yellow;
+	background-color: blue;
+}
+
+#shopPage:hover {
+	color: orange;
+	border: 2px solid orange;
+	background-color: palegoldenrod;
+}
+
+
+#shopPage {
+	color: lightgoldenrodyellow;
+	background-color: gold;
+	width: 40%;
+	border: 2px solid lightgoldenrodyellow;;
+}
+
+
+/* PULSANTI PER REGISTRAZIONE E ACCESSO E RISPETTIVI MODAL */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+	font-size: 80%;
+    height: 5em;
+    width: 25%;
+    margin: 2%;
+    background-color: midnightblue;
+    color: lightgoldenrodyellow;
+    cursor:pointer;
+    -webkit-transition: width 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: width 0.5s;
+    border-color: lightgoldenrodyellow;
+}
+
+.button:hover{
+    background-color: blue;
+    width: 28%;
+    color: gold;
+    border-color: gold;
+}
+
+
+.buttonScambia {
+	font-size: 80%;
+    height: 5em;
+    width: 40%;
+    margin: 2%;
+    background-color: midnightblue;
+    color: lightgoldenrodyellow;
+    cursor:pointer;
+    -webkit-transition: width 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: width 0.5s;
+    border-color: lightgoldenrodyellow;
+}
+
+.buttonScambia:hover{
+    background-color: blue;
+    width: 50%;
+    color: gold;
+    border-color: gold;
+}
+
+
+.regacc, .buy{
+    display: none;
+}
+.regacc.active, .buy.active{
+    position: relative;
+    display: block;
+    border: 2px solid gold;
+    background-color: midnightblue;
+    width: 50%;
+    z-index: 2;
+}
+
+.submit, #toAcc:disabled{
+    width: 50%;
+    height: 4em;
+    cursor:pointer;
+    background-color: darkblue;
+    color: lightgoldenrodyellow;
+    border-color: lightgoldenrodyellow;
+
+    transition: background-color 0.3s;
+    -webkit-transition: background-color 0.3s;
+
+    margin-bottom: 2em;
+}
+
+.submit:hover, #toAcc:active:hover {
+    background-color: blue;
+    color: gold;
+    border-color: gold;
+}
+
+.submit:disabled{
+	background-color: darkgrey;
+	color: gray;
+	border-color: darkslategray;
+}
+.submit:disabled:hover{
+	background-color: darkgrey;
+	color: gray;
+	border-color: darkslategray;
+	cursor: not-allowed;
+}
+
+#toAcc {
+	background: midnightblue;
+}
+
+
+#showpsw{
+	color: lightgoldenrodyellow;
+	font-size: 10px;
+}
+
+
+
+.close{
+    float: left;
+    border:none;
+    color:red;
+}
+.close:hover{
+    color:whitesmoke;
+    background-color: red;
+    cursor:pointer;
+}
+
+.errors{
+    color:red;
+    font-size: 12px;
+}
+
+.input-registration, .input-access, .input-mod, .input-buy{
+    border: 3px solid gold;
+    width:100%
+}
+
+
+form{
+	width: 60%;
+	margin: auto;
+}
+
+label {
+	color: lightgoldenrodyellow;
+	font-size: 16px;
+}
+
+
+#bar{
+    background-color: red;
+    height: 0.7%;
+}
+
+#label-bar{
+    font-size: 12px;
+    color: lightgoldenrodyellow;
+}
+
+
+
+.cover{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 80%;
+    z-index: 1;
+}
+
+
+hr {
+	color: lightgoldenrodyellow;
+	background-color: lightgoldenrodyellow;
+	height: 0.4em;
+}
+
+/* PROFILO */
+
+.modifiche{
+    display: none;
+    
+}
+.modifiche.active{
+    color:black;
+    position: relative;
+    display: block;
+    border-radius: 3%;
+    border: 3px solid red;
+    box-shadow: 2px 2px 2px 2px darkred;
+    background-color: white;
+    width: 50%;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    color: lightgoldenrodyellow;
+}
+
+
+
+.infoProfilo{
+    font-size: 28px;
+    color: lightgoldenrodyellow;
+    margin: 1em 0;
+}
+
+
+
+
+/*  SHOP */
+.acquista{
+    width: 128px;
+    height: 48px;
+    margin: 2%;
+    background: transparent;
+    color: lightgoldenrodyellow;
+    border-color: lightgoldenrodyellow;
+    background-color: midnightblue;
+
+    -webkit-transition: width 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: width 0.5s;
+}
+
+.acquista:hover{
+	width: 168px;
+
+    background: blue;
+    cursor:pointer;
+    color: gold;
+    border-color: gold;
+}
+
+
+.acquista_pacchetti{
+    width: 128px;
+    height: 48px;
+    margin: 2%;
+    background: transparent;
+    color: lightgoldenrodyellow;
+    border-color: lightgoldenrodyellow;
+    background-color: midnightblue;
+
+    -webkit-transition: width 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: width 0.5s;
+}
+
+.acquista_pacchetti:hover{
+	width: 168px;
+
+    background: blue;
+    cursor:pointer;
+    color: gold;
+    border-color: gold;
+}
+
+
+
+
+
+/*  SCAMBIO */
+
+/*EROI SCAMBIABILI*/
+#choose-hero > select {
+    width: 80%;
+}
+
+
+#hero-list{
+	width: 80%;
+	height: 15em;
+	margin: auto;
+	background-color: #10102b;
+	border: solid 0.8px lightgoldenrodyellow;
+}
+
+#hero-list option{
+	color: lightgoldenrodyellow;
+	border-bottom: solid 0.8px lightgoldenrodyellow;
+}
+
+
+#hero-list-proposte{
+	width: 80%;
+	background-color: #10102b;
+	border: solid 0.8px lightgoldenrodyellow;
+}
+
+#hero-list-proposte option{
+	color: lightgoldenrodyellow;
+	border-bottom: solid 0.8px lightgoldenrodyellow;
+}
+
+#proposte-fatte > select {
+    width: 80%;
+}
+
+/*ALBUM DELLE FIGURINE */
+
+  /*ALBUM*/
+.cards{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 15px;
+}
+  /*FIGURINA*/
+.carta{
+    max-width: 350px;
+    width: 20%;
+    height: auto;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 2% 0.2%;
+    background: linear-gradient(grey, midnightblue);
+}
+  
+  /*IMMAGINE EROE*/
+.img {
+	display: block;
+	border: 0;
+	width: 100%;
+	height: auto;
+}
+  /*NOME EROE*/
+.heading{
+	color: gold;
+    font-weight: bold;
+    font-size: 120%;
+    text-align: center;
+    padding: 5px;
+    margin: 10px;
+}
+
+.mostraPiu, .mostraMeno, .annullaSel{
+	font-size: 80%;
+	color: lightgoldenrodyellow;
+}
+.mostraPiu:hover, .mostraMeno:hover, .annullaSel:hover {
+	color: gold;
+	cursor: pointer;
+}
+
+/*DESCRIZIONE*/
+.desc {
+    color: lightblue;
+    margin: 8px;
+    font-size: 90%;
+}

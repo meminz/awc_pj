@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	<title>Scambi | Album Supereroi</title>
+
+	<link rel="stylesheet" href="style.css">
+    <script src="js/scambi.js" type="text/javascript"></script>
+    <script src="js/marvel.js" type="text/javascript"></script>
+
+    <script>
+        username = sessionStorage.getItem("username")
+        password = sessionStorage.getItem("password") 
+        existAlbum = sessionStorage.getItem("album"+username)
+        if (username == null || password == null){
+            window.alert("Registrati prima di tornare in questa pagina!")
+            location.href="index.html"
+        } else {
+            start()
+        }
+        if(existAlbum == 1){
+            alert("Prima di tornare in questa sezione crea un album!")
+            window.location.href="profilo.html"
+        }
+    </script>
+
+
+</head>
+
+<body>
+	<div class="cover" id="cover"></div>
+
+ 	<header>
+		<center><h1 id="mainTitle">Area Scambi</h1></center>
+
+		<nav> 
+			<a href="profilo.html">PROFILO</a>
+			<a href="shop.html" id="shopPage">NEGOZIO</a>
+			<a href="#">SCAMBI</a>
+			<a href="index.html" onclick="exit()">ESCI</a>
+		</nav>
+	</header>
+
+	
+
+
+
+    <div class="container">
+        <div id="choose-hero" class="regacc">
+            <button class="close" onclick="chiudiScambiabili();">X</button><center><img src="img/logo.jpeg" width="30%"></center><br><br>
+            <center style="color: lightgoldenrodyellow;">SCAMBIA I TUOI DOPPIONI</center><br>
+            <center>
+            <form>
+            <select id="hero-list" onchange="controlChoose()" size="5"></select><br>
+            <label class="annullaSel" onclick="deleteSelection()">Annulla Selezione</label><br><br>
+            <script>
+            eroiScambiabili()
+            </script></form>
+            <center><input id="Proponi" class="button" onclick="proponi()" type="submit" value="Proponi" disabled></center><br>
+            </center>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="proposte-fatte" class="regacc">
+            <button class="close" onclick="chiudiProposte();">X</button>
+            <center><img src="img/logo.jpeg" width="30%"></center><br><br>
+            <center style="color: lightgoldenrodyellow;">LE TUE PROPOSTE</center>
+            <br>
+            <form>
+            	<select id="hero-list-proposte" onchange="controlChooseProposte()" size="5"></select><br>
+            	<label class="annullaSel" onclick="deleteSelectionProposte()">Annulla Selezione</label><br><br>
+            </form>
+            <center><input id="scambia" class="button" onclick="confermaScambio()" type="submit" value="SCAMBIA" disabled></center><br>
+        </div>
+    </div>
+
+    <br><br><br><br>
+    <center><button id="button-proponi" onclick="apriScambiabili()" class="button">SCAMBIA</button></center><br><br><hr>
+    <br><br><br>
+    <center style="color: lightgoldenrodyellow;">Scambi disponibili:</center><br><br>
+    <div id="scambi-disponibili" class="cards"><script>visualizzaScambi()</script></div>
+
+</body>
+</html>
