@@ -91,7 +91,7 @@ function registration(){
     users.push(user);
     localStorage.setItem('users',JSON.stringify(users))
 
-    createAlbum()
+    createAlbum(user.username)
 
     alert("Registrazione avvenuta con successo.");
     window.location.reload();
@@ -310,13 +310,15 @@ function controlChooseHero() {
 function change(){
     heroList = document.getElementById("hero-list")
     if (heroList.selectedIndex != -1){
+        document.getElementById("registration").disabled=false
         document.getElementById("registration").value="Registrati"
     }
 }
 function deleteSelection() {
     heroList = document.getElementById("hero-list")
     heroList.selectedIndex = -1
-    document.getElementById("registration").value="Salta e Registrati"
+    document.getElementById("registration").disabled=true
+    document.getElementById("registration").value="Scegli un Eroe"
 }
 function goBack(){
     document.getElementById("reg").classList.add("active")
@@ -440,24 +442,21 @@ function ckUsernameAcc(){
 
 
 //CREAZIONE ALBUM
-function createAlbum(){
-    sessionUser = sessionStorage.getItem("username")
+function createAlbum(username){
     album = localStorage.getItem("album")
     if (album == null || album=="undefined"){
         album = []
     } else {
         album = JSON.parse(album)
     }
+
     raccolta = []
     newAlbum = {
-        proprietario: sessionUser,
+        proprietario: username,
         figurine: raccolta
     }
     album.push(newAlbum)
     localStorage.setItem("album",JSON.stringify(album))
-    // alert ("Album creato con successo")
-    sessionStorage.removeItem("album"+sessionUser)
-    // window.location.reload()
 }
 
 function loadAlbum(){
