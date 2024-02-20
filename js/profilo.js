@@ -470,18 +470,17 @@ function goToDelete(){
     document.getElementById("deleteProfile").style.display="none"
     document.getElementById("openMod").style.display="none"
     document.getElementById("nomeUtente").style.display="none"
-    document.getElementById("emailUtente").style.display="none"
     document.getElementById("delete").classList.add("active");
     document.getElementById("cover").style.display="inline-block";
 }
 
 function closeDelete() {
-    document.getElementById("deleteProfile").style.display="block"
-    document.getElementById("openMod").style.display="block"
-    document.getElementById("nomeUtente").style.display="block"
-    document.getElementById("emailUtente").style.display="block"
-    document.getElementById("delete").classList.remove("active");
-    document.getElementById("cover").style.display="none";
+    // document.getElementById("deleteProfile").style.display="block"
+    // document.getElementById("openMod").style.display="block"
+    // document.getElementById("nomeUtente").style.display="block"
+    // document.getElementById("delete").classList.remove("active");
+    // document.getElementById("cover").style.display="none";
+    window.location.reload()
 }
 
 function deleteProfile() {
@@ -570,38 +569,7 @@ function isCreate(){
 
     }
 
-    // } else {
-    //     btn = document.createElement("button")
-    //     btn.innerHTML = "Crea Album"
-    //     classe = document.createAttribute("class")
-    //     classe.value = "button"
-    //     funzione = document.createAttribute("onclick")
-    //     funzione.value = "createAlbum()"
-    //     btn.setAttributeNode(funzione)
-    //     btn.setAttributeNode(classe)
-    //     document.getElementById("creaAlbum").appendChild(btn)
-    // }
 }
-
-// function createAlbum(){
-//     sessionUser = sessionStorage.getItem("username")
-//     album = localStorage.getItem("album")
-//     if (album == null || album=="undefined"){
-//         album = []
-//     } else {
-//         album = JSON.parse(album)
-//     }
-//     raccolta = []
-//     newAlbum = {
-//         proprietario: sessionUser,
-//         figurine: raccolta
-//     }
-//     album.push(newAlbum)
-//     localStorage.setItem("album",JSON.stringify(album))
-//     alert ("Album creato con successo")
-//     sessionStorage.removeItem("album"+sessionUser)
-//     window.location.reload()
-// }
 
 
 function stampaAlbum(nome,figura,descrizione,idx,quantita){
