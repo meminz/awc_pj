@@ -90,13 +90,15 @@
         	<center><img src="img/logo.jpeg" width="30%"></center><br><br>
 
 			<center><label>Scegli il tuo Supereroe preferito!</label></center><br>
-			<center><select id="hero-list" size="5" onchange="change()"></select></center><br>
-			<center><label id="cancelHero" onclick="deleteSelection()">Annulla Selezione</label><center>
+			<center><form>
+				<select id="hero-list" size="5" onchange="change()"></select><br>
+				<label id="cancelHero" onclick="deleteSelection()">Annulla Selezione</label>
+			</form></center>
 			<br><br>
 			<script>realChoose()</script>
 
 			<center><button onclick="goBack()" id="toReg" class="back">Indietro</button><br>
-			<input type="submit" id="registration" class="next" onclick="registration()" value="Salta e Registrati"></center>
+			<input type="submit" id="registration" class="next" onclick="registration()" value="Scegli un Eroe" disabeld></center>
 		</div>
 	</div>
 
