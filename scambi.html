@@ -15,14 +15,10 @@
         password = sessionStorage.getItem("password") 
         existAlbum = sessionStorage.getItem("album"+username)
         if (username == null || password == null){
-            window.alert("Registrati prima di tornare in questa pagina!")
+            window.alert("Accedi prima di tornare in questa pagina!")
             location.href="index.html"
         } else {
             start()
-        }
-        if(existAlbum == 1){
-            alert("Prima di tornare in questa sezione crea un album!")
-            window.location.href="profilo.html"
         }
     </script>
 
@@ -50,36 +46,68 @@
     <div class="container">
         <div id="choose-hero" class="regacc">
             <button class="close" onclick="chiudiScambiabili();">X</button><center><img src="img/logo.jpeg" width="30%"></center><br><br>
-            <center style="color: lightgoldenrodyellow;">SCAMBIA I TUOI DOPPIONI</center><br>
+            <center style="color: lightgoldenrodyellow;">Scambia i tuoi doppioni</center><br>
             <center>
+
             <form>
             <select id="hero-list" onchange="controlChoose()" size="5"></select><br>
-            <label class="annullaSel" onclick="deleteSelection()">Annulla Selezione</label><br><br>
+            <label class="annullaSel" onclick="deleteSelection()">Annulla selezione</label><br><br>
             <script>
             eroiScambiabili()
             </script></form>
-            <center><input id="Proponi" class="button" onclick="proponi()" type="submit" value="Proponi" disabled></center><br>
+            <input id="Proponi" class="submit" onclick="proponi()" type="submit" value="Scegli una carta" disabled><br>
             </center>
         </div>
     </div>
+
+
+    <br><br>
+    <center><button id="button-proponi" onclick="apriScambiabili()" class="button">PROPONI SCAMBIO</button></center>
+
+    <div class="container">
+        <div id="offerte-ricevute" class="regacc">
+            <button class="close" onclick="chiudiOfferte();">X</button>
+            <center><img src="img/logo.jpeg" width="30%"></center><br><br>
+            <center style="color: lightgoldenrodyellow;">Proposte ricevute</center>
+            <br>
+            <center>
+
+            <form>
+                <select id="hero-list-offerte" onchange="controlChooseOfferte()" size="5"></select><br>
+                <label class="annullaSel" onclick="deleteSelectionOfferte()">Annulla selezione</label><br><br>
+
+            </form>
+            <input id="accetta-" class="submit" onclick="confermaScambio(this.id)" type="submit" value="Scegli una carta" disabled><br>
+            </center>
+        </div>
+    </div>
+
+
+    <center style="color: lightgoldenrodyellow;">Offerte ricevute:</center><br><br>
+    <div id="offerte-disponibili" class="cards"><script>carteOfferte()</script></div>
+
+    <br><br><hr>
+    <br><br><br>
+
 
     <div class="container">
         <div id="proposte-fatte" class="regacc">
             <button class="close" onclick="chiudiProposte();">X</button>
             <center><img src="img/logo.jpeg" width="30%"></center><br><br>
-            <center style="color: lightgoldenrodyellow;">LE TUE PROPOSTE</center>
+            <center style="color: lightgoldenrodyellow;">Le tue proposte</center>
             <br>
+            <center>
+
             <form>
-            	<select id="hero-list-proposte" onchange="controlChooseProposte()" size="5"></select><br>
-            	<label class="annullaSel" onclick="deleteSelectionProposte()">Annulla Selezione</label><br><br>
+                <select id="hero-list-proposte" onchange="controlChooseProposte()" size="5"></select><br>
+                <label class="annullaSel" onclick="deleteSelectionProposte()">Annulla selezione</label><br><br>
             </form>
-            <center><input id="scambia" class="button" onclick="confermaScambio()" type="submit" value="SCAMBIA" disabled></center><br>
+            <input id="scambia" class="submit" onclick="offri()" type="submit" value="Scegli una carta" disabled><br>
+            </center>
         </div>
     </div>
 
-    <br><br><br><br>
-    <center><button id="button-proponi" onclick="apriScambiabili()" class="button">SCAMBIA</button></center><br><br><hr>
-    <br><br><br>
+
     <center style="color: lightgoldenrodyellow;">Scambi disponibili:</center><br><br>
     <div id="scambi-disponibili" class="cards"><script>visualizzaScambi()</script></div>
 

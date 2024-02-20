@@ -116,20 +116,20 @@ nav a:hover, nav a:active{
 
 .buttonScambia {
 	font-size: 80%;
-    height: 5em;
-    width: 40%;
-    margin: 2%;
+    height: 4em;
+    width: 50%;
+    align-self: center;
     background-color: midnightblue;
     color: lightgoldenrodyellow;
     cursor:pointer;
-    -webkit-transition: width 0.5s; /* For Safari 3.1 to 6.0 */
-    transition: width 0.5s;
+/*     -webkit-transition: width 0.5s; /* For Safari 3.1 to 6.0 */
+/*     transition: width 0.5s; */
+    transform: translateX(50%);
     border-color: lightgoldenrodyellow;
 }
 
 .buttonScambia:hover{
     background-color: blue;
-    width: 50%;
     color: gold;
     border-color: gold;
 }
@@ -147,7 +147,7 @@ nav a:hover, nav a:active{
     z-index: 2;
 }
 
-.submit, #toAcc:disabled{
+.submit{
     width: 50%;
     height: 4em;
     cursor:pointer;
@@ -155,13 +155,13 @@ nav a:hover, nav a:active{
     color: lightgoldenrodyellow;
     border-color: lightgoldenrodyellow;
 
-    transition: background-color 0.3s;
-    -webkit-transition: background-color 0.3s;
+    /* transition: background-color 0.3s;
+     */-webkit-transition: background-color 0.3s;
 
     margin-bottom: 2em;
 }
 
-.submit:hover, #toAcc:active:hover {
+.submit:hover {
     background-color: blue;
     color: gold;
     border-color: gold;
@@ -169,24 +169,31 @@ nav a:hover, nav a:active{
 
 .submit:disabled{
 	background-color: darkgrey;
-	color: gray;
+	color: darkslategray;
 	border-color: darkslategray;
 }
 .submit:disabled:hover{
-	background-color: darkgrey;
-	color: gray;
-	border-color: darkslategray;
 	cursor: not-allowed;
 }
 
-#toAcc {
+/* #toAcc {
 	background: midnightblue;
-}
+} */
 
 
 #showpsw{
 	color: lightgoldenrodyellow;
 	font-size: 10px;
+}
+
+#cancelHero{
+    color: lightgoldenrodyellow;
+    font-size: 10px;
+}
+#cancelHero:hover{
+    color: gold;
+    font-size: 10px;
+    cursor: pointer;
 }
 
 
@@ -211,6 +218,97 @@ nav a:hover, nav a:active{
     border: 3px solid gold;
     width:100%
 }
+
+
+
+#choose-hero{
+    display: none;
+}
+
+#choose-hero.active{
+    position: relative;
+    display: block;
+    border: 2px solid gold;
+    background-color: midnightblue;
+    width: 50%;
+    z-index: 2;
+}
+
+#choose-hero > select {
+    width: 80%;
+}
+
+.next{
+    width: 50%;
+    height: 4em;
+    cursor:pointer;
+    background-color: midnightblue;
+    color: lightgoldenrodyellow;
+    border-color: lightgoldenrodyellow;
+
+    transition: background-color 0.3s;
+    -webkit-transition: background-color 0.3s;
+
+    margin-bottom: 2em;
+}
+
+.next:hover{
+    background-color: blue;
+    color: gold;
+    border-color: gold;
+}
+
+.next:disabled{
+    background-color: darkgrey;
+    color: gray;
+    border-color: darkslategray;
+}
+
+.next:disabled:hover{
+    background-color: darkgrey;
+    color: gray;
+    border-color: darkslategray;
+    cursor: not-allowed;
+}
+
+
+
+.back{
+    width: 50%;
+    height: 4em;
+    cursor:pointer;
+    background-color: midnightblue;
+    color: lightgoldenrodyellow;
+    border-color: lightgoldenrodyellow;
+
+    transition: background-color 0.3s;
+    -webkit-transition: background-color 0.3s;
+
+    margin-bottom: 2em;
+}
+
+.back:hover{
+    background-color: blue;
+    color: gold;
+    border-color: gold;
+}
+
+.back:disabled{
+    background-color: darkgrey;
+    color: gray;
+    border-color: darkslategray;
+}
+
+.back:disabled:hover{
+    background-color: darkgrey;
+    color: gray;
+    border-color: darkslategray;
+    cursor: not-allowed;
+}
+
+
+
+
 
 
 form{
@@ -255,20 +353,19 @@ hr {
 	height: 0.4em;
 }
 
-/* PROFILO */
 
+/* PROFILO */
 .modifiche{
     display: none;
     
 }
 .modifiche.active{
-    color:black;
+    color:blue;
     position: relative;
     display: block;
     border-radius: 3%;
-    border: 3px solid red;
-    box-shadow: 2px 2px 2px 2px darkred;
-    background-color: white;
+    border: 3px solid gold;
+    background-color: midnightblue;
     width: 50%;
 }
 
@@ -286,6 +383,7 @@ hr {
     font-size: 28px;
     color: lightgoldenrodyellow;
     margin: 1em 0;
+/*     display: inline-block; */
 }
 
 
@@ -349,32 +447,21 @@ hr {
 }
 
 
-#hero-list{
-	width: 80%;
+#hero-list, #hero-list-proposte, #hero-list-offerte {
+	width: 100%;
 	height: 15em;
 	margin: auto;
 	background-color: #10102b;
 	border: solid 0.8px lightgoldenrodyellow;
 }
 
-#hero-list option{
+#hero-list option, #hero-list-proposte option, #hero-list-offerte option{
 	color: lightgoldenrodyellow;
 	border-bottom: solid 0.8px lightgoldenrodyellow;
 }
 
 
-#hero-list-proposte{
-	width: 80%;
-	background-color: #10102b;
-	border: solid 0.8px lightgoldenrodyellow;
-}
-
-#hero-list-proposte option{
-	color: lightgoldenrodyellow;
-	border-bottom: solid 0.8px lightgoldenrodyellow;
-}
-
-#proposte-fatte > select {
+#proposte-fatte > select, #offerte-ricevute > select{
     width: 80%;
 }
 
@@ -392,12 +479,13 @@ hr {
 .carta{
     max-width: 350px;
     width: 20%;
-    height: auto;
+    height: fit-content;
     border-radius: 10px;
     overflow: hidden;
     margin: 2% 0.2%;
     background: linear-gradient(grey, midnightblue);
 }
+
   
   /*IMMAGINE EROE*/
 .img {

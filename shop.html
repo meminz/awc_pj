@@ -15,15 +15,12 @@
         password = sessionStorage.getItem("password") 
         existAlbum = sessionStorage.getItem("album"+username)
         if (username == null || password == null){
-            window.alert("Registrati prima di tornare in questa pagina!")
+            window.alert("Accedi prima di tornare in questa pagina!")
             location.href="index.html"
         } else {
             start()
         }
-        if(existAlbum == 1){
-            alert("Prima di tornare in questa sezione crea un album!")
-            window.location.href="album.html"
-        }
+        
     </script>
 
 
@@ -42,11 +39,6 @@
             <a href="index.html" onclick="exit()">ESCI</a>
         </nav>
     </header>
-
-
-    
-
-
 
 
     <div class="container">
@@ -168,5 +160,15 @@
     </center>
 
     </div>
+
+    <div class="cover" id="cover"></div>
+
+    <div id="printCarte">
+
+    </div>
+
+
+
+
 </body>
 </html>

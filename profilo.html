@@ -15,7 +15,7 @@
         password = sessionStorage.getItem("password")
         existAlbum = sessionStorage.getItem("album"+username)
         if (username == null || password == null){
-            window.alert("Registrati prima di tornare in questa pagina!")
+            window.alert("Accedi prima di tornare in questa pagina!")
             location.href="index.html"
         } else {
             start();
@@ -49,23 +49,57 @@
             <br><br>
 
             <form>
-                <label>USERNAME</label><br>
+                <label>Username</label><br>
 	            <input type="text" class="input-mod" onkeyup="ckUsername();activeMod()" id="user-mod" placeholder="username">
 	            <br><label class="errors" id="username-errors"></label><br>
-	            <label>EMAIL</label><br>
+
+	            <label>Email</label><br>
 	            <input type="email" class="input-mod" onkeyup="ckEmail();activeMod()" id="email-mod" placeholder="esempio@email.xx">
 	            <br><label class="errors" id="email-errors"></label><br>
-	            <label>PASSWORD</label><br>
-	            <input type="password" class="input-mod" onkeyup="ckPassword();activeMod();passwordBar()" id="password-mod" placeholder="password">
-	            <input type="checkbox" onclick="show_hide_mod()"><label id="showpsw">mostra password</label><br>
-	            <div id="bar"><label id="label-bar"></label></div>
-	            <label class="errors" id="password-errors"></label>
+
+	            <label>Password:</label><br>
+                <input type="password" id="password-mod" class="input-mod"
+                            onkeyup="ckPassword();passwordBar();confirmPsw();" placeholder="********">
+                <div id="bar"><label id="label-bar"></label></div>
+                <label class="errors" id="password-errors"></label><br>
+
+                <label>Confirm password:</label><br>
+                <input type="password" id="confirmPsw-mod" class="input-mod"
+                            onkeyup="confirmPsw();" placeholder="********">
+                <input type="checkbox" onclick="show_hide_mod()"><label id="showpsw">mostra password</label><br>
+                <label class="errors" id="confirmPsw-errors"></label>
 	            <br><br>
 
-	            <center><input id="toMod" class="submit" onclick="modifica()" type="submit" value="Modifica" disabled></center>
+	            <center><input id="toMod" class="submit" onclick="chooseHero()" type="button" value="Scelta Eroe"></center>
             </form>
         </div>
     </div>
+
+    <!-- SCELTA EROE PREFERITO -->
+    <div class="container">
+        <div id="choose-hero">
+            <button class="close" onclick="closemod();">X</button>
+            <center><img src="img/logo.jpeg" width="30%"></center>
+            <br><br>
+
+            <center><label>Modifica il tuo Supereroe preferito</label></center><br>
+             <center><select id="hero-list" size="5"></select></center><br>
+            <center><label id="cancelHero" onclick="deleteSelection()">Annulla Selezione</label><center>
+            <br><br>
+            <script>realChoose()</script>
+
+            <center><button onclick="goBack()" id="toMod" class="back">Indietro</button><br>
+            <input type="submit" id="toReg" class="next" onclick="modifica()" value="Modifica"></center>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
 
     <div class="profile">
         <div id="delete" class="regacc">
@@ -79,12 +113,13 @@
     </div>
 
 
-    <div id="profile-container1" class="profile"> <script>obtainName()</script> 
-        <div id="crediti">
-            <img src="img/cash.png" alt="$$" width="60em" style="margin: 1em 0"> <script>numeroCrediti()</script>
-        </div>
+    <div id="profile-container1" class="profile"> <script>obtainName()</script>
+        <div id="crediti"><img src="img/cash.png" alt="$$" width="60em" style="margin: 1em 0"> <script>numeroCrediti()</script></div>
     </div>
-    <div id="profile-container2" class="profile"> <script>obtainemail()</script> </div>
+    <div id="profile-container2" class="profile"> <script>obtainfavhero()</script> </div>
+    <!-- <div id="profile-container3" class="profile"> <script>obtainemail()</script> </div> -->
+    
+    <br><br>
 
     <center>
         <button onclick="goToMod()" id="openMod" class="button">MODIFICA</button>
@@ -96,14 +131,14 @@
    	<br>
 
 
-
 <!-- ALBUM -->
-	<div class="profile">
-		<p class="infoProfilo">Il tuo ALBUM</p>
-	</div>
-	<br>
-	<center><div class="cards" id="creaAlbum"><script>isCreate();</script></div></center>
+    <center>
+		<p class="infoProfilo">Il tuo ALBUM<br></p>
+        <p class="infoProfilo" id="carteMancanti"></p><script>carteMancanti();</script>
+    </center>
 
+	<br>
+    <div class="cards" id="creaAlbum"><script>isCreate();</script></div>
 
 </body>
 </html>

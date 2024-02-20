@@ -14,7 +14,7 @@
 
 <body onload="caricaEroi();">
 	<div class="cover" id="cover"></div>
-	
+
 	<header>
 		<center><h1 id="mainTitle">Album delle Figure dei Supereroi</h1></center>
 
@@ -27,65 +27,86 @@
 	</header>
 	
 
-	
+
+    <div class="container">
+
+    	<div id="reg" class="regacc">
+            
+            <button class="close" onclick="closereg();">X</button>
+            <center><img src="img/logo.jpeg" width="30%"></center><br><br>
+
+            <form>
+                <label>Username:</label><br>
+                <input type="text" id="user-register" class="input-registration" onkeyup="ckUsername();" placeholder="username">
+                <br><label class="errors" id="username-errors"></label><br><br>
+
+                <label>E-mail:</label><br>
+                <input type="email" id="email-register" class="input-registration" onkeyup="ckEmail();" placeholder="account@esempio.xx">
+                <br><label class="errors" id="email-errors"></label><br><br>
+
+                <label>Password:</label><br>
+                <input type="password" id="password-register" class="input-registration"
+                			onkeyup="ckPassword();passwordBar();confirmPsw();" placeholder="********">
+                <div id="bar"><label id="label-bar"></label></div>
+                <label class="errors" id="password-errors"></label>
+
+                <label>Confirm password:</label><br>
+                <input type="password" id="confirmPsw-register" class="input-registration"
+                			onkeyup="confirmPsw();" placeholder="********">
+                <input type="checkbox" onclick="show_hide_reg()"><label id="showpsw">mostra password</label><br>
+                <label class="errors" id="confirmPsw-errors"></label>
+                
+                <br><br>
+
+           		<center><input id="toReg" class="next" onclick="chooseHero()" type="button" value="Scelta Eroe" disabled></center> 
+            </form>
+
+   		</div>
 
 
-	
-        <div class="container">
-    
-        	<div id="reg" class="regacc">
-	            
-	            <button class="close" onclick="closereg();">X</button><center>
-	            <img src="img/logo.jpeg" width="30%"></center><br><br>
+        <div id="acc" class="regacc">        
+            <button class="close" onclick="closeacc();">X</button>
+            <center><img src="img/logo.jpeg"  width="30%"></center><br><br>
 
-	            <form>    
-	                <label>Username:</label><br>
-	                <input type="text" id="user-register" class="input-registration" onkeyup="ckUsername();" placeholder="username">
-	                <br><label class="errors" id="username-errors"></label><br><br>
-	                <label>E-mail:</label><br>
-	                <input type="email" id="email-register" class="input-registration" onkeyup="ckEmail();" placeholder="account@esempio.xx">
-	                <br><label class="errors" id="email-errors"></label><br><br>
-	                <label>Password:</label><br>
-	                <input type="password" id="password-register" class="input-registration"
-	                			onkeyup="ckPassword();activeReg();passwordBar();" placeholder="password">
-	                <input type="checkbox" onclick="show_hide_reg()"><label id="showpsw">mostra password</label><br>
-	                <div id="bar"><label id="label-bar"></label></div>
-	                <label class="errors" id="password-errors"></label>
-	                <br><br>
+            <form>
+				<label>Username:</label>
+				<input type="text" class="input-access" id="user-access" placeholder="username"><br>
+				<label class="errors" id="user-errors"></label>
+				<br><br>
+				<label>Password:</label>
+				<input type="password" class="input-access" id="password-access" placeholder="password">
+				<input type="checkbox" onclick="show_hide_acc()"><label id="showpsw">mostra password</label><br>
+                <label class="errors" id="pass-errors"></label>
+				<br><br>
+				<center><input id="toAcc" onclick="access()" class="submit" type="button" value="Accedi"></center>
+	        </form>
+        </div>
+	</div>
 
-               		<center><input id="toReg" class="submit" onclick="registration()" type="submit" value="REGISTRATI" disabled></center>
-	            </form>
+	<!-- SCELTA EROE PREFERITO -->
+	<div class="container">
+		<div id="choose-hero">
+			<button class="close" onclick="closereg();">X</button>
+        	<center><img src="img/logo.jpeg" width="30%"></center><br><br>
 
-       		</div>
-    
+			<center><label>Scegli il tuo Supereroe preferito!</label></center><br>
+			<center><select id="hero-list" size="5" onchange="change()"></select></center><br>
+			<center><label id="cancelHero" onclick="deleteSelection()">Annulla Selezione</label><center>
+			<br><br>
+			<script>realChoose()</script>
 
-	        <div id="acc" class="regacc">        
-	            <button class="close" onclick="closeacc();">X</button><center>
-	            <img src="img/logo.jpeg"  width="30%"></center><br><br>
+			<center><button onclick="goBack()" id="toReg" class="back">Indietro</button><br>
+			<input type="submit" id="registration" class="next" onclick="registration()" value="Salta e Registrati"></center>
+		</div>
+	</div>
 
-	            <form>
-					<label>Username:</label>
-					<input type="text" onkeyup="AccessControl();activeAcc();" class="input-access" id="user-access" placeholder="username"><br>
-					<label class="errors" id="user-errors"></label>
-					<br><br>
-					<label>Password:</label>
-					<input type="password" onkeyup="AccessControl();activeAcc();" class="input-access" id="password-access" placeholder="password">
-					<input type="checkbox" onclick="show_hide_acc()"><label id="showpsw">mostra password</label><br>
-	                <label class="errors" id="pass-errors"></label>
-					<br><br>
-					<center><input id="toAcc" onclick="access()" class="submit" type="submit" value="ACCEDI" disabled></center>
-		        </form>
 
-	        </div>
-    	</div>
+	<br><br><br><br>
+    <div id="buttons" class="container">
 
-		<br><br><br><br>
-        <div id="buttons" class="container">
-
-            <button class="button" onclick="goToReg()">REGISTRAZIONE</button>
-            <button class="button" id="accbutton" onclick="goToAcc()">LOGIN</button>
-            <br><br>
-         </div>
+        <button class="button" onclick="goToReg()">REGISTRAZIONE</button>
+        <button class="button" id="accbutton" onclick="goToAcc()">LOGIN</button>
+        <br><br>
     </div>
 
 
