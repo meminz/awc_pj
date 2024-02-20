@@ -2,10 +2,15 @@ function closereg(){ // chiude il modal per registrarsi
     document.getElementById("buttons").style.display="flex";
     document.getElementById("reg").classList.remove("active");
     document.getElementById("cover").style.display="none";
+    document.getElementById("user-register").value="";
     document.getElementById("username-errors").textContent=null;
+    document.getElementById("email-register").value="";
     document.getElementById("email-errors").textContent=null;
     document.getElementById("password-errors").textContent=null;
     document.getElementById("label-bar").textContent=null;
+    // document.getElementById("passowrd-register").value="";
+    // document.getElementById("confirmPsw-register").value="";
+    document.getElementById("choose-hero").classList.remove("active")
 }
 function closeacc(){ // chiude il modal per accedere
     document.getElementById("buttons").style.display="flex";
@@ -23,7 +28,6 @@ function goToAcc(){ // apre il modal per accedere
     document.getElementById("buttons").style.display="none";
     document.getElementById("acc").classList.add("active");
     document.getElementById("cover").style.display="block";
-    // document.getElementById("toAcc").disabled="true";
 }
 function show_hide_acc(){ // mostra o nasconde la password nel modal per accedere
     x = document.getElementById("password-access");
@@ -33,9 +37,22 @@ function show_hide_acc(){ // mostra o nasconde la password nel modal per acceder
         x.type = "password";
     }
 }
+
 function show_hide_reg(){ // mostra o nasconde la password nel modal per registrarsi
     x = document.getElementById("password-register");
-    y = document.getElementById("showpsw");
+    y = document.getElementById("confirmPsw-register");
+    if (x.type == "password"){
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+
+    y.type = x.type
+}
+
+function show_hide_confirm(){
+    x = document.getElementById("confirmPsw-register");
+    y = document.getElementById("showpswconf");
     if (x.type == "password"){
         x.type = "text";
     } else {
@@ -53,16 +70,29 @@ function registration(){
     } else {
         users = JSON.parse(users);
     }
-
-    user = {
-    username: document.getElementById("user-register").value,
-    email: document.getElementById("email-register").value,
-    password: document.getElementById("password-register").value,
-    crediti: 0
+    if (controlChooseHero()){
+        user = {
+        username: document.getElementById("user-register").value,
+        email: document.getElementById("email-register").value,
+        password: document.getElementById("password-register").value,
+        favHero: document.getElementById("hero-list")[index].value,
+        crediti: 0
+        }
+    } else {
+        user = {
+        username: document.getElementById("user-register").value,
+        email: document.getElementById("email-register").value,
+        password: document.getElementById("password-register").value,
+        favHero: "",
+        crediti: 0
+        }
     }
-
+    
     users.push(user);
-    localStorage.setItem('users',JSON.stringify(users)),
+    localStorage.setItem('users',JSON.stringify(users))
+
+    createAlbum()
+
     alert("Registrazione avvenuta con successo.");
     window.location.reload();
 }
@@ -70,7 +100,7 @@ function registration(){
 
 
 
-//CONTROLLO SULL'USERNAME PER LA REGISTRAZIONE
+//CONTROLLO USERNAME REGISTRAZIONE
 function ckUsername(){
     document.getElementById("user-register").style.borderColor="red";
     document.getElementById("username-errors").textContent=null;
@@ -110,7 +140,7 @@ function Space(id){
 
 
 
-// CONTROLLO SULL'EMAIL PER LA REGISTRAZIONE
+// CONTROLLO EMAIL REGISTRAZIONE
 function ckEmail(){
     document.getElementById("email-register").style.borderColor="red";
     document.getElementById("email-errors").textContent=null;
@@ -136,6 +166,7 @@ function ckEmail(){
     }
     return false
 }
+
 function emailValidator(id){
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.getElementById(id).value)){
         return true
@@ -147,12 +178,15 @@ function emailValidator(id){
 
 
 
-//CONTROLLO SULLA PASSWORD PER LA REGISTRAZIONE
+//CONTROLLO PASSWORD REGISTRAZIONE
 function ckPassword(){
-    value = 120
+    value = 100
     document.getElementById("password-errors").textContent=""
     document.getElementById("password-register").style.borderColor="red";
     password = document.getElementById("password-register").value
+
+    if (password==="") return 0
+
     if (password.length < 7){
         value = value -20
         document.getElementById("password-errors").textContent = "⚠ La password deve contenere almeno 7 caratteri."
@@ -192,32 +226,32 @@ function ckPassword(){
 function passwordBar() {
     value = ckPassword();
         switch (value) {
-            case 20:
+            case 0:
                 document.getElementById("bar").style.width="16.67%"
                 document.getElementById("bar").style.background="darkred"
                 document.getElementById("label-bar").textContent="Scarsa"
                 break;
-            case 40:
+            case 20:
                 document.getElementById("bar").style.width="33.33%"
                 document.getElementById("bar").style.background="red"
                 document.getElementById("label-bar").textContent="Debole"
                 break;
-            case 60:
+            case 40:
                 document.getElementById("bar").style.width="50%"
                 document.getElementById("bar").style.background="orange"
                 document.getElementById("label-bar").textContent="Mediocre"
                 break;
-            case 80:
+            case 60:
                 document.getElementById("bar").style.width="66,67%"
                 document.getElementById("bar").style.background="yellow"
                 document.getElementById("label-bar").textContent="Media"
                 break;
-            case 100:
+            case 80:
                 document.getElementById("bar").style.width="83.33%"
                 document.getElementById("bar").style.background="green"
                 document.getElementById("label-bar").textContent="Forte"
                 break;
-            case 120:
+            case 100:
                 document.getElementById("bar").style.width="100%"
                 document.getElementById("bar").style.background="green"
                 document.getElementById("label-bar").textContent="Molto forte"
@@ -229,13 +263,30 @@ function passwordBar() {
 }
 
 
+function confirmPsw(){
+    psw = document.getElementById("password-register").value
+    confirm = document.getElementById("confirmPsw-register").value
+    document.getElementById("confirmPsw-register").style.borderColor="red";
 
+    if(confirm === psw){
+        document.getElementById("confirmPsw-register").style.borderColor="green";
+        document.getElementById("confirmPsw-errors").textContent = ""
+        document.getElementById("toReg").disabled = false;
+    } else {
+        document.getElementById("confirmPsw-errors").textContent = "⚠ Le password devono essere uguali."
+        document.getElementById("toReg").disabled = true;
+    }
 
-// ATTIVA PULSANTE REGISTRAZIONE
-function activeReg(){
-    if (ckUsername() && ckEmail() && ckPassword()==120)
-        document.getElementById("toReg").disabled=false;
 }
+
+
+    
+// ATTIVA PULSANTE REGISTRAZIONE
+// function activeReg(){
+//     if (ckUsername() && ckEmail() && ckPassword()==100 && confirmPsw()){
+//         document.getElementById("toReg").disabled=false;
+//     }
+// }
 
 
 
@@ -243,6 +294,88 @@ function activeReg(){
 function exit(){
     sessionStorage.clear()
 }
+
+
+
+
+//CONTROLLO SCELTA SUPEREROE
+function controlChooseHero() {
+    index = document.getElementById("hero-list").selectedIndex
+    if (index == -1){
+        return false
+    } else {
+        return true
+    }
+}
+function change(){
+    heroList = document.getElementById("hero-list")
+    if (heroList.selectedIndex != -1){
+        document.getElementById("registration").value="Registrati"
+    }
+}
+function deleteSelection() {
+    heroList = document.getElementById("hero-list")
+    heroList.selectedIndex = -1
+    document.getElementById("registration").value="Salta e Registrati"
+}
+function goBack(){
+    document.getElementById("reg").classList.add("active")
+    document.getElementById("choose-hero").classList.remove("active")
+}
+
+
+function chooseHero() {
+    document.getElementById("choose-hero").classList.add("active")
+    document.getElementById("reg").classList.remove("active")
+}
+
+function realChoose(){
+    characters = localStorage.getItem('heroes')
+    hero1 = localStorage.getItem('hero1')
+    hero2 = localStorage.getItem('hero2')
+    hero3 = localStorage.getItem('hero3')
+    hero4 = localStorage.getItem('hero4')
+    hero5 = localStorage.getItem('hero5')
+    hero6 = localStorage.getItem('hero6')
+    hero7 = localStorage.getItem('hero7')
+    hero8 = localStorage.getItem('hero8')
+    hero9 = localStorage.getItem('hero9')
+    hero10 = localStorage.getItem('hero10')
+    hero11 = localStorage.getItem('hero11')
+
+    characters = JSON.parse(characters)
+    for (let i of characters){
+        document.getElementById('hero-list').add(new Option(i.name))
+    }
+
+    hero1 = JSON.parse(hero1)
+    document.getElementById('hero-list').add(new Option(hero1.name))
+    hero2 = JSON.parse(hero2)
+    document.getElementById('hero-list').add(new Option(hero2.name))
+    hero3 = JSON.parse(hero3)
+    document.getElementById('hero-list').add(new Option(hero3.name))
+    hero4 = JSON.parse(hero4)
+    document.getElementById('hero-list').add(new Option(hero4.name))
+    hero5 = JSON.parse(hero5)
+    document.getElementById('hero-list').add(new Option(hero5.name))
+    hero6 = JSON.parse(hero6)
+    document.getElementById('hero-list').add(new Option(hero6.name))
+    hero7 = JSON.parse(hero7)
+    document.getElementById('hero-list').add(new Option(hero7.name))
+    hero8 = JSON.parse(hero8)
+    document.getElementById('hero-list').add(new Option(hero8.name))
+    hero9 = JSON.parse(hero9)
+    document.getElementById('hero-list').add(new Option(hero9.name))
+    hero10 = JSON.parse(hero10)
+    document.getElementById('hero-list').add(new Option(hero10.name))
+    hero11 = JSON.parse(hero11)
+    document.getElementById('hero-list').add(new Option(hero11.name))
+
+}
+
+
+
+
 
 
 
@@ -306,11 +439,50 @@ function ckUsernameAcc(){
 }
 
 
+//CREAZIONE ALBUM
+function createAlbum(){
+    sessionUser = sessionStorage.getItem("username")
+    album = localStorage.getItem("album")
+    if (album == null || album=="undefined"){
+        album = []
+    } else {
+        album = JSON.parse(album)
+    }
+    raccolta = []
+    newAlbum = {
+        proprietario: sessionUser,
+        figurine: raccolta
+    }
+    album.push(newAlbum)
+    localStorage.setItem("album",JSON.stringify(album))
+    // alert ("Album creato con successo")
+    sessionStorage.removeItem("album"+sessionUser)
+    // window.location.reload()
+}
+
+function loadAlbum(){
+    username = sessionStorage.getItem("username")
+    album = localStorage.getItem("album")
+
+    if (album == null || album == "undefined"){
+        album = []
+    } else {
+        album = JSON.parse(album)
+    }
+
+    if (!album.some(a => a.proprietario == username)){
+        createAlbum()
+    }
+
+}
+
+
+
+
 function AccessControl() {
     document.getElementById("user-errors").textContent="";
     document.getElementById("pass-errors").textContent="";
 
-    document.getElementById("toAcc").disabled=true
     users = localStorage.getItem("users")
     if (users == null){
         users = [];
@@ -341,15 +513,13 @@ function AccessControl() {
 
 }
 
-function activeAcc(){
-    if(AccessControl()){
-        document.getElementById("toAcc").disabled=false;
-    }
-}
 function access() {
     if(AccessControl()){
         sessionStorage.setItem("username",document.getElementById("user-access").value)
         sessionStorage.setItem("password",document.getElementById("password-access").value)
+
+        loadAlbum()
+
         location.href = "profilo.html"
     }
 }

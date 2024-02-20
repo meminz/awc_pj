@@ -44,7 +44,7 @@ function numeroCrediti(){
             style = document.createAttribute("style")
             style.value="color:white;font-size:1em;"
             num.setAttributeNode(style)
-            document.getElementById("crediti").appendChild(num)
+            document.getElementById("crediti").appendChild(num)            
         }
     }
     
@@ -367,11 +367,7 @@ function pacchetto1(){
     for (let i of users){
         if (i.username == session_us && i.password == session_psw){
             if (i.crediti<1){
-                alert("Devi acquistare i crediti prima di comprare un pacchetto.")
-                break
-            } else if (album.length == 0 || !album.some(u => u.proprietario == session_us)){
-                alert("Devi creare un album prima di comprare un pacchetto.")
-                sessionStorage.setItem("album"+session_us,1)
+                alert("Devi acquistare dei crediti prima di comprare un pacchetto.")
                 break
             }
         }
@@ -380,35 +376,39 @@ function pacchetto1(){
         if (j.username == session_us && j.password == session_psw){
             if (j.crediti>0){
                  for (let i of album){
-        if (i.proprietario == session_us && i.proprietario != ""){
-            for (j =0;j<4;j++){
-                scelta = getRandomInt(0,99)
-                eroe = eroi[scelta].name
-            if (i.figurine.length == 0){
-                figurina = {
-                    nome: eroe,
-                    quantita: 1
-                    }
-                    i.figurine.push(figurina)
-                    nuove.push(eroe)
-            } else if (i.figurine.some(a => a.nome == eroe)){
-                for (let j of i.figurine){
-                    if(j.nome == eroe){
-                        j.quantita = j.quantita+1
-                    }
-                }
-                doppie.push(eroe)
-            } else {
-                scelta = getRandomInt(0,99)
-                eroe = eroi[scelta].name
-                figurina = {
-                    nome: eroe,
-                    quantita: 1
-                    }
-                    i.figurine.push(figurina)
-                    nuove.push(eroe)
-            }
-        }
+                    if (i.proprietario == session_us && i.proprietario != ""){
+                        for (j=0;j<4;j++){
+                            scelta = getRandomInt(0,99)
+                            eroe = eroi[scelta].name
+                            if (i.figurine.length == 0){
+                                figurina = {
+                                    nome: eroe,
+                                    quantita: 1
+                                }
+                                i.figurine.push(figurina)
+                                nuove.push(eroe)
+
+                            } else if (i.figurine.some(a => a.nome == eroe)){
+
+                                for (let j of i.figurine){
+                                    if(j.nome == eroe){
+                                        j.quantita = j.quantita+1
+                                    }
+                                }
+                                doppie.push(eroe)
+
+                            } else {
+                                // scelta = getRandomInt(0,99)
+                                // eroe = eroi[scelta].name
+                                figurina = {
+                                    nome: eroe,
+                                    quantita: 1
+                                }
+                                i.figurine.push(figurina)
+                                nuove.push(eroe)
+                            }
+                        }
+
         speciale = getRandomInt(1,11)
         eroe_speciale = localStorage.getItem("hero"+speciale)
         eroe_speciale = JSON.parse(eroe_speciale)
@@ -442,15 +442,19 @@ function pacchetto1(){
             }
         }
     }
+
+    // TODO FORMAT
     if(nuove.length != 0){
     alert("HAI TROVATO "+nuove.length+" NUOVI EROI!\n" + nuove)
     }
+
     if (doppie.length != 0){
     alert("Hai trovato "+doppie.length+" doppioni:\n"+doppie)
     }
+
     localStorage.setItem("users",JSON.stringify(users))
     localStorage.setItem("album",JSON.stringify(album))
-    window.location.reload()
+    // window.location.reload()
 }
 
 
@@ -473,10 +477,6 @@ function pacchetto10(){
         if (i.username == session_us && i.password == session_psw){
             if (i.crediti<10){
                 alert("Devi acquistare i crediti prima di comprare un pacchetto.")
-                break
-            } else if (album.length == 0 || !album.some(u => u.proprietario == session_us)){
-                alert("Devi creare un album prima di comprare un pacchetto.")
-                sessionStorage.setItem("album"+session_us,1)
                 break
             }
         }

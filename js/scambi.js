@@ -46,6 +46,7 @@ function numeroCrediti(){
     }
 }
 
+
 function apriScambiabili(){
     document.getElementById("cover").style.display="block"
     document.getElementById("choose-hero").classList.add("active")
@@ -58,11 +59,35 @@ function chiudiScambiabili(){
     document.getElementById("button-proponi").style.display="block"
 }
 
+function apriProposte(){
+    document.getElementById("cover").style.display="block"
+    document.getElementById("scambi-disponibili").style.display="none"
+    document.getElementById("proposte-fatte").classList.add("active")
+    document.getElementById("button-proponi").style.display="none"
+    scambia()
+}
+
 function chiudiProposte(){
-    document.getElementById("cover").style.display="none"
-    document.getElementById("proposte-fatte").classList.remove("active")
-    document.getElementById("button-proponi").style.display="block"
-    document.getElementById("scambi-disponibili").style.display="block"
+    // document.getElementById("cover").style.display="none"
+    // document.getElementById("proposte-fatte").classList.remove("active")
+    // document.getElementById("button-proponi").style.display="block"
+    // document.getElementById("scambi-disponibili").style.display="block"
+    window.location.reload()
+}
+
+function apriOfferte(eroe){
+    document.getElementById("cover").style.display="block"
+    document.getElementById("offerte-ricevute").classList.add("active")
+    document.getElementById("offerte-disponibili").style.display="none"
+    visualizzaOfferte(eroe.slice(4))
+
+}
+
+function chiudiOfferte(){
+    // document.getElementById("cover").style.display="none"
+    // document.getElementById("offerte-ricevute").classList.remove("active")
+    // document.getElementById("offerte-disponibili").style.display="block"
+    // carteOfferte()
     window.location.reload()
 }
 
@@ -88,17 +113,29 @@ function eroiScambiabili() {
 function deleteSelection() {
     heroList = document.getElementById("hero-list")
     heroList.selectedIndex = -1
+    document.getElementById("Proponi").disabled = true
+    document.getElementById("Proponi").value = "Scegli una carta"
 }
 
 function deleteSelectionProposte() {
     heroList = document.getElementById("hero-list-proposte")
     heroList.selectedIndex = -1
+    document.getElementById("scambia").disabled = true
+    document.getElementById("scambia").value = "Scegli una carta"
+}
+
+function deleteSelectionOfferte() {
+    heroList = document.getElementById("hero-list-offerte")
+    heroList.selectedIndex = -1
+    document.querySelector('[id^="accetta-"]').disabled = true
+    document.querySelector('[id^="accetta-"]').value = "Scegli una carta"
 }
 
 function controlChoose(){
     hero_list = document.getElementById("hero-list")
     if (hero_list.selectedIndex != -1){
         document.getElementById("Proponi").disabled = false;
+        document.getElementById("Proponi").value = "Proponi"
     }
 }
 
@@ -106,6 +143,15 @@ function controlChooseProposte(){
     hero_list = document.getElementById("hero-list-proposte")
     if (hero_list.selectedIndex != -1){
         document.getElementById("scambia").disabled = false;
+        document.getElementById("scambia").value = "Offri carta";
+    }
+}
+
+function controlChooseOfferte(){
+    hero_list = document.getElementById("hero-list-offerte")
+    if (hero_list.selectedIndex != -1){
+        document.querySelector('[id^="accetta-"]').disabled = false;
+        document.querySelector('[id^="accetta-"]').value = "Accetta scambio";
     }
 }
 
@@ -129,7 +175,8 @@ function proponi(){
                     j.quantita = j.quantita-1
                     scambio = {
                         chi: proprietario,
-                        cosa: j.nome
+                        cosa: j.nome,
+                        offerte: []
                     }
                     scambi.push(scambio)
                     localStorage.setItem("scambi",JSON.stringify(scambi))
@@ -142,35 +189,10 @@ function proponi(){
 }
 
 function visualizzaScambi(){
-    heroes = localStorage.getItem('heroes')
-    hero1 = localStorage.getItem('hero1')
-    hero1 = JSON.parse(hero1)
-    hero2 = localStorage.getItem('hero2')
-    hero2 = JSON.parse(hero2)
-    hero3 = localStorage.getItem('hero3')
-    hero3 = JSON.parse(hero3)
-    hero4 = localStorage.getItem('hero4')
-    hero4 = JSON.parse(hero4)
-    hero5 = localStorage.getItem('hero5')
-    hero5 = JSON.parse(hero5)
-    hero6 = localStorage.getItem('hero6')
-    hero6 = JSON.parse(hero6)
-    hero7 = localStorage.getItem('hero7')
-    hero7 = JSON.parse(hero7)
-    hero8 = localStorage.getItem('hero8')
-    hero8 = JSON.parse(hero8)
-    hero9 = localStorage.getItem('hero9')
-    hero9 = JSON.parse(hero9)
-    hero10 = localStorage.getItem('hero10')
-    hero10 = JSON.parse(hero10)
-    hero11 = localStorage.getItem('hero11')
-    hero11 = JSON.parse(hero11)
-
-
-
 
     scambi = localStorage.getItem("scambi")
     current_user = sessionStorage.getItem("username")
+
     if(scambi == null){
         avviso = document.createElement("center")
         avviso.style.color = "lightgoldenrodyellow"
@@ -180,15 +202,146 @@ function visualizzaScambi(){
         scambi = JSON.parse(scambi)
         for (i=0;i<scambi.length;i++){
             if(scambi[i].chi != current_user){
-                descrizione = obtainDesc(scambi[i].cosa)
                 img = obtainimg(scambi[i].cosa)
-                stampaAlbum(scambi[i].cosa,img,descrizione)
+                stampaAlbum(scambi[i].cosa,img)
             }
         }
     }
 }
 
-function stampaAlbum(nome,figura,descrizione,chi){
+
+function carteOfferte(){
+    scambi = JSON.parse(localStorage.getItem("scambi"))
+    user = sessionStorage.getItem("username")
+
+    for(let s of scambi){
+        if(s.chi == user){
+            let proposta = s.cosa
+
+
+            // print supereroe proposto
+            div = document.createElement("div") // crea la carta
+            classeDiv = document.createAttribute("class")
+            classeDiv.value = "carta"
+            id = document.createAttribute("id")
+            id.value = "offerte-"+proposta
+            div.setAttributeNode(classeDiv)
+            div.setAttributeNode(id)
+            document.getElementById("offerte-disponibili").appendChild(div)
+
+
+            img = document.createElement("img") // aggiunge l'immagine
+            src = document.createAttribute("src")
+            classeImg = document.createAttribute("class")
+            classeImg.value="img"
+            img.setAttributeNode(classeImg)
+            src.value = obtainimg(proposta)
+            img.setAttributeNode(src)
+            document.getElementById(id.value).appendChild(img)
+
+
+            eroe = document.createElement("div") //aggiunge il nome
+            classeEroe = document.createAttribute("class")
+            classeEroe.value = "heading"
+            eroe.setAttributeNode(classeEroe)
+            eroe.innerHTML = proposta
+            document.getElementById(id.value).appendChild(eroe)
+                
+
+            btn = document.createElement("button")  //aggiunge il bottone
+            btn.innerHTML="Scambia"
+            btnId = document.createAttribute("id")
+            btnId.value = "btn-"+proposta
+            btn.setAttributeNode(btnId)
+            classeBtn = document.createAttribute("class")
+            classeBtn.value = "buttonScambia"
+            funzioneBtn = document.createAttribute("onclick")
+            funzioneBtn.value="apriOfferte(this.id)"
+            btn.setAttributeNode(funzioneBtn)
+            btn.setAttributeNode(classeBtn)
+            document.getElementById(id.value).appendChild(btn)
+        }
+    }
+}
+
+
+
+function visualizzaOfferte(eroe){
+            // console.log(eroe)
+
+            // // scroll con le offerte (come selezione proposta)
+            // // <select id="hero-list-proposte" onchange="controlChooseProposte()" size="5"></select><br>
+            // select = document.createElement("select")
+            // id = document.createAttribute("id")
+            // id.value = "hero-list-offerte"
+            // select.setAttributeNode(id)
+            // select.addEventListener("change", function(){controlChooseOfferte()})
+            // size = document.createAttribute("size")
+            // size.value = "5"
+            // select.setAttributeNode(size)
+            user = sessionStorage.getItem("username")
+            scambi = JSON.parse(localStorage.getItem("scambi"))
+            for(let s of scambi){
+                if(s.chi == user && s.cosa == eroe){
+                    select = document.getElementById("hero-list-offerte") 
+                    for(let o of s.offerte){
+                        offerta = o.offerta + " <= " + o.offerente
+                        select.add(new Option(offerta))
+                    }
+
+                }
+            }
+
+            button = document.getElementById("accetta-")
+            button.id += eroe
+
+            
+            // document.getElementById(proposta).appendChild(select)
+
+            // document.getElementById(proposta).appendChild(document.createElement("br"))
+
+
+            // annulla select
+            // <label class="annullaSel" onclick="deleteSelectionProposte()">Annulla Selezione</label><br><br>
+            // label = document.createElement("label")
+            // classe = document.createAttribute("class")
+            // classe.value = "annullaSel"
+            // label.setAttributeNode(classe)
+            // label.addEventListener("click", function(){deleteSelectionOfferte()})
+            // label.textContent = "Annulla selezione"
+            // document.getElementById(proposta).appendChild(label)
+
+            // document.getElementById(proposta).appendChild(document.createElement("br"))
+            // document.getElementById(proposta).appendChild(document.createElement("br"))
+
+
+            // button "accetta" onclick confermaScambio()
+            // <input id="Proponi" class="submit" onclick="proponi()" type="submit" value="Scegli una carta" disabled>
+                //confermaScambio deve anche togliere le altre offerte e riaggiungerle all'album del proprietario
+            // input = document.createElement("input")
+            // id = document.createAttribute("id")
+            // id.value = "accetta"
+            // input.setAttributeNode(id)
+            // classe = document.createAttribute("class")
+            // classe.value = "submit"
+            // input.setAttributeNode(classe)
+            // type = document.createAttribute("type")
+            // type.value = "submit"
+            // input.setAttributeNode(type)
+            // value = document.createAttribute("value")
+            // value.value = "Scegli una carta"
+            // input.setAttributeNode(value)
+            // disabled = document.createAttribute("disabled")
+            // input.setAttributeNode(disabled)
+            // input.addEventListener("click", function(){accetta()})
+            // document.getElementById(proposta).appendChild(input)
+    //     }
+    // }
+}
+
+
+
+function stampaAlbum(nome,figura,chi){
     div = document.createElement("div") // crea la carta
     classeDiv = document.createAttribute("class")
     classeDiv.value = "carta"
@@ -217,9 +370,9 @@ function stampaAlbum(nome,figura,descrizione,chi){
     document.getElementById(nome).appendChild(eroe)
 
 
-    desc = document.createElement("p") //aggiunge la descrizione
-    desc.innerHTML = descrizione
-    document.getElementById(nome).appendChild(desc)
+    // desc = document.createElement("p") //aggiunge la descrizione
+    // desc.innerHTML = descrizione
+    // document.getElementById(nome).appendChild(desc)
 
     btn = document.createElement("button")  //aggiunge il bottone
     btn.innerHTML="Scambia"
@@ -229,35 +382,80 @@ function stampaAlbum(nome,figura,descrizione,chi){
     classeBtn = document.createAttribute("class")
     classeBtn.value = "buttonScambia"
     funzioneBtn = document.createAttribute("onclick")
-    funzioneBtn.value="scambia();riceviId()"
+    funzioneBtn.value="apriProposte()"
     btn.setAttributeNode(funzioneBtn)
     btn.setAttributeNode(classeBtn)
-    document.getElementById(nome).appendChild(btn)
-}
-
-function scambia() {
-    document.getElementById("cover").style.display="block"
-    document.getElementById("scambi-disponibili").style.display="none"
-    document.getElementById("proposte-fatte").classList.add("active")
-    document.getElementById("button-proponi").style.display="none"
-    session_us = sessionStorage.getItem("username")
-    scambi = localStorage.getItem("scambi")
-    scambi = JSON.parse(scambi)
-    for (let i of scambi){
-        if(i.chi == session_us){
-            document.getElementById('hero-list-proposte').add(new Option(i.cosa))
+    
+    // disabilita il bottone per lo scambio se l'utente ha già la carta
+    user = sessionStorage.getItem("username")
+    for (let i of album){ //controlliamo che la figurina che vogliamo non è nel nostro album
+        if (i.proprietario == user){
+            for (j=0;j<i.figurine.length;j++){
+                if(i.figurine[j].nome == riceviId()){
+                    btn.disabled = true
+                }
+            }
         }
     }
+
+    document.getElementById(nome).appendChild(btn)
+
+}
+function scambia() {
+    session_us = sessionStorage.getItem("username")
+
+    richiesta = riceviId()
+
+    // scambi = localStorage.getItem("scambi")
+    // scambi = JSON.parse(scambi)
+    // for (let i of scambi){
+    //     if(i.chi == session_us){
+
+    //         document.getElementById('hero-list-proposte').add(new Option(i.cosa))
+    //     }
+    // }
+
+
+    for (let i of scambi){ //troviamo l'utente che ha proposto la figurina che vogliamo
+        if(i.cosa == richiesta.value){
+            altri = i.chi
+        }
+    }
+
+    for (let i of album){
+        if (i.proprietario == session_us){
+            for(let j of i.figurine){
+                if(j.quantita>1){
+                    presente = false
+                    // constrollo non sia presente nell'album dell'altro utente
+                    for (let a of album){
+                        if(a.proprietario==altri){
+                            for(k=0;k<a.figurine.length;k++){
+                                if(a.figurine[k].nome == j.nome){
+                                    presente = true
+                                }
+                            }
+                        }
+                    }
+
+                    if(!presente){ document.getElementById('hero-list-proposte').add(new Option(j.nome)) }
+                }
+            }
+        }
+    }
+
 }
 
 function riceviId(chi){
     return this.id
 }
 
-function confermaScambio(){
+
+
+function offri(){
     idx = document.getElementById("hero-list-proposte").selectedIndex //la nostra proposta di scambio
     proposta = document.getElementById("hero-list-proposte")[idx].value
-    noi = sessionStorage.getItem("username")
+    user = sessionStorage.getItem("username")
     altri = ""
 
     richiesta = riceviId() //la figurina che vogliamo
@@ -267,75 +465,196 @@ function confermaScambio(){
     scambi = JSON.parse(scambi)
     album = JSON.parse(album)
 
-    for (let i of album){ //controlliamo che la figurina che vogliamo non è nel nostro album
-        if (i.proprietario == noi){
-            for (j=0;j<i.figurine.length;j++){
-                if(i.figurine[j].nome == richiesta.value){
-                    alert("Scambio annullato. La figurina è già nell'album.")
-                    return false
-                }
+
+    for(let s of scambi){
+        if(s.cosa == richiesta.value){
+
+            offerta = {
+                offerente: user,
+                offerta: proposta
             }
-        }
-    }
 
-    for (let i of scambi){ //troviamo l'utente che ha proposto la figurina che vogliamo
-        if(i.cosa == richiesta.value){
-            altri = i.chi
-        }
-    }
+            s.offerte.push(offerta)
 
-    for (let i of album){ //controlliamo che la figurina proposta non sia nell'album dell'altro utente
-        if(i.proprietario==altri){
-            for(j=0;j<i.figurine.length;j++){
-                if(i.figurine[j].nome == proposta){
-                    alert("Scambio annullato. La figurina proposta è già nell'album dell'altro utente.")
-                    return false
-                }
-            }
-        }
-    }
-
-    for (i=0;i<scambi.length;i++){
-        if(scambi[i].cosa == proposta && scambi[i].chi == noi){ //elimina la nostra proposta di scambio
-            scambi.splice(i,1)
-
-            for (let j of album){ 
-                if(j.proprietario==noi){
-                    figurina = {
-                        nome: richiesta.value,
-                        quantita:1
+            // diminuisce quantità della carta offerta dall'utente
+            for (let i of album){
+                if(i.proprietario == user){
+                    for (let j of i.figurine){
+                        if(j.nome == proposta){
+                            j.quantita = j.quantita-1
+                            localStorage.setItem("album",JSON.stringify(album))
+                        }
                     }
-                    j.figurine.push(figurina) //aggiunge la figurina richiesta al nostro album 
-
                 }
+            }
+
+
+            break
+        
+            
+        }
+    }
+    localStorage.setItem("scambi",JSON.stringify(scambi))
+    window.location.reload()
+    
+}
+
+
+
+
+
+function confermaScambio(proposta){
+    user = sessionStorage.getItem("username")
+    proposta = proposta.slice(8)
+
+    idx = document.getElementById("hero-list-offerte").selectedIndex //la nostra proposta di scambio
+    offerta = document.getElementById("hero-list-offerte")[idx].value
+    offerente = offerta.split(" <= ")[1]
+    cartaOfferta = offerta.split(" <= ")[0]
+    console.log("diamo " + proposta)
+    console.log("riceviamo " + cartaOfferta)
+    console.log("da " + offerente)
+
+    scambi = JSON.parse(localStorage.getItem("scambi"))
+    album = JSON.parse(localStorage.getItem("album"))
+
+    // SPOSTATO IN stampaAlbum()
+    // for (let i of album){ //controlliamo che la figurina che vogliamo non è nel nostro album
+    //     if (i.proprietario == noi){
+    //         for (j=0;j<i.figurine.length;j++){
+    //             if(i.figurine[j].nome == richiesta.value){
+    //                 alert("Scambio annullato. La figurina è già nell'album.")
+    //                 return false
+    //             }
+    //         }
+    //     }
+    // }
+
+    // // SPOSTATO IN scambia()
+    // // for (let i of album){ //controlliamo che la figurina proposta non sia nell'album dell'altro utente
+    // //     if(i.proprietario==altri){
+    // //         for(j=0;j<i.figurine.length;j++){
+    // //             if(i.figurine[j].nome == proposta){
+    // //                 alert("Scambio annullato. La figurina proposta è già nell'album dell'altro utente.")
+    // //                 return false
+    // //             }
+    // //         }
+    // //     }
+    // // }
+
+
+
+
+    // scambio
+    for(let a of album){
+
+        //aggiunta offerta al nostro album
+        if(a.proprietario == user){
+            if(a.figurine.some(f => f.name == cartaOfferta)){
+                for(i=0;i<a.figurine.lenght;i++){
+                    a.figurine[i].quantità += 1
+                }
+            }else{
+                figurina = {
+                    nome: cartaOfferta,
+                    quantita: 1
+                }
+                a.figurine.push(figurina)    
+            }
+        }
+
+        // aggiunta nostra proposta all'album dell'offerente
+        if(a.proprietario == offerente){
+            
+            if(a.figurine.some(f => f.name == proposta)){
+                for(i=0;i<a.figurine.lenght;i++){
+                    a.figurine[i].quantità += 1
+                }
+            }else{
+                figurina = {
+                    nome: proposta,
+                    quantita: 1
+                }
+                a.figurine.push(figurina)    
             }
         }
     }
 
-    for (i=0;i<scambi.length;i++){
-        if(scambi[i].cosa == richiesta.value && scambi[i].chi == altri){ //elimina l'altra proposta di scambio
-            scambi.splice(i,1)
 
-            for (let j of album){
-                if (j.proprietario==altri){
-                    figurina = {
-                        nome: proposta,
-                        quantita:1
+    // restituzione carte proposte da altri utenti
+    for(let i=0; i<scambi.length; i++){
+        if(scambi[i].chi == user && scambi[i].cosa == proposta){
+        
+            for(let o of scambi[i].offerte){
+                if(o.offerta == cartaOfferta && o.offerente == offerente){
+                    continue
+                }else{
+
+                    for(let a of album){
+                        if(a.proprietario == offerente){
+                            for(let f of a.figurine){
+                                if(f.nome==cartaOfferta){
+                                    f.quantita +=1
+                                }
+                            }
+                        }
                     }
-                    j.figurine.push(figurina)
 
-
-
-
-
-                    alert("scambio effettuato.")
-                    localStorage.setItem("scambi",JSON.stringify(scambi))
-                    localStorage.setItem("album",JSON.stringify(album))
-                    window.location.reload()
                 }
             }
+        // rimozione scambio
+        scambi.splice(i,1)
         }
     }
+
+    
+    alert("Scambio effettuato con successo!")
+    localStorage.setItem("scambi",JSON.stringify(scambi))
+    localStorage.setItem("album",JSON.stringify(album))
+    window.location.reload()
+
+
+    // for (i=0;i<scambi.length;i++){
+    //     if(scambi[i].cosa == offerta && scambi[i].chi == offerente){ //elimina la nostra proposta di scambio
+    //         tmp = scambi.splice(i,1)
+    //         console.log(tmp, scambi)
+
+    //         for (let j of album){ 
+    //             if(j.proprietario==user){
+    //                 figurina = {
+    //                     nome: offerta,
+    //                     quantita:1
+    //                 }
+    //                 console.log(figurina)
+    //                 // j.figurine.push(figurina) //aggiunge la figurina richiesta al nostro album 
+
+    //             }
+    //         }
+    //     }
+    // }
+
+    // for (i=0;i<scambi.length;i++){
+    //     if(scambi[i].cosa == proposta && scambi[i].chi == user){ //elimina l'altra proposta di scambio
+    //         tmp = scambi.splice(i,1)
+    //         console.log("" + tmp)
+
+    //         for (let j of album){
+    //             if (j.proprietario==offerente){
+    //                 figurina = {
+    //                     nome: proposta,
+    //                     quantita:1
+    //                 }
+    //                 console.log(figurina)
+    //                 // j.figurine.push(figurina)
+
+    //                 alert("scambio effettuato.")
+    //                 // localStorage.setItem("scambi",JSON.stringify(scambi))
+    //                 // localStorage.setItem("album",JSON.stringify(album))
+    //                 window.location.reload()
+    //             }
+    //         }
+    //     }
+    // }
 
 }
 
@@ -369,118 +688,49 @@ function obtainimg(favHero){
     if(heroes.some(h => h.name == favHero)){
         for (let i of heroes){
             if(i.name == favHero){
-                img = i.thumbnail.path
-                img += ".jpg"
+                image = i.thumbnail.path
+                image += ".jpg"
             }
         }
     } else if (hero1.name == favHero){
-            img = hero1.thumbnail.path
-            img += ".jpg"
+            image = hero1.thumbnail.path
+            image += ".jpg"
         } else if (hero2.name == favHero){
-            img = hero2.thumbnail.path
-            img += ".jpg"
+            image = hero2.thumbnail.path
+            image += ".jpg"
         } else if (hero3.name == favHero){
-            img = hero3.thumbnail.path
-            img += ".jpg"
+            image = hero3.thumbnail.path
+            image += ".jpg"
         } else if (hero4.name == favHero){
-            img = hero4.thumbnail.path
-            img += ".jpg"
+            image = hero4.thumbnail.path
+            image += ".jpg"
         } else if (hero5.name == favHero){
-            img = hero5.thumbnail.path
-            img += ".jpg"
+            image = hero5.thumbnail.path
+            image += ".jpg"
         } else if (hero6.name == favHero){
-            img = hero6.thumbnail.path
-            img += ".jpg"
+            image = hero6.thumbnail.path
+            image += ".jpg"
         } else if (hero7.name == favHero){
-            img = hero7.thumbnail.path
-            img += ".jpg"
+            image = hero7.thumbnail.path
+            image += ".jpg"
         } else if (hero8.name == favHero){
-            img = hero8.thumbnail.path
-            img += ".jpg"
+            image = hero8.thumbnail.path
+            image += ".jpg"
         } else if (hero9.name == favHero){
-            img = hero9.thumbnail.path
-            img += ".jpg"
+            image = hero9.thumbnail.path
+            image += ".jpg"
         } else if (hero10.name == favHero){
-            img = hero10.thumbnail.path
-            img += ".jpg"
+            image = hero10.thumbnail.path
+            image += ".jpg"
         } else if (hero11.name == favHero){
-            img = hero11.thumbnail.path
-            img += ".jpg"
+            image = hero11.thumbnail.path
+            image += ".jpg"
         } else {
-            img = "images/noimg.jpeg"
+            image = "images/noimg.jpeg"
         }
-    return img
+    return image
 }
 
-function obtainDesc(favHero){
-    heroes = localStorage.getItem('heroes')
-    heroes = JSON.parse(heroes)
-    hero1 = localStorage.getItem('hero1')
-    hero1 = JSON.parse(hero1)
-    hero2 = localStorage.getItem('hero2')
-    hero2 = JSON.parse(hero2)
-    hero3 = localStorage.getItem('hero3')
-    hero3 = JSON.parse(hero3)
-    hero4 = localStorage.getItem('hero4')
-    hero4 = JSON.parse(hero4)
-    hero5 = localStorage.getItem('hero5')
-    hero5 = JSON.parse(hero5)
-    hero6 = localStorage.getItem('hero6')
-    hero6 = JSON.parse(hero6)
-    hero7 = localStorage.getItem('hero7')
-    hero7 = JSON.parse(hero7)
-    hero8 = localStorage.getItem('hero8')
-    hero8 = JSON.parse(hero8)
-    hero9 = localStorage.getItem('hero9')
-    hero9 = JSON.parse(hero9)
-    hero10 = localStorage.getItem('hero10')
-    hero10 = JSON.parse(hero10)
-    hero11 = localStorage.getItem('hero11')
-    hero11 = JSON.parse(hero11)
-   if (heroes.some(h => h.name == favHero)){
-       for (let i of heroes){
-           if(i.name == favHero){
-               desc = i.description
-           }
-       }
-   } else if (hero1.name == favHero){
-            desc = hero1.description
-            
-        } else if (hero2.name == favHero){
-            desc = hero2.description
-            
-        } else if (hero3.name == favHero){
-            desc = hero3.description
-            
-        } else if (hero4.name == favHero){
-            desc = hero4.description
-            
-        } else if (hero5.name == favHero){
-            desc = hero5.description
-            
-        } else if (hero6.name == favHero){
-            desc = hero6.description
-            
-        } else if (hero7.name == favHero){
-            desc = hero7.description
-            
-        } else if (hero8.name == favHero){
-            desc = hero8.description
-            
-        } else if (hero9.name == favHero){
-            desc = hero9.description
-            
-        } else if (hero10.name == favHero){
-            desc = hero10.description
-            
-        } else if (hero11.name == favHero){
-            desc = hero11.description
-            
-        } else {
-            desc = "nessuna descrizione disponibile."
-        }
-    return desc
-}
 
 function obtainComics(favHero){
     heroes = localStorage.getItem('heroes')
